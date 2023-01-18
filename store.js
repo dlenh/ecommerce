@@ -1,4 +1,4 @@
-if (document.readyState == "loading") {
+if (document.readyState == "loading") { // check document is loaded before accessing different parts
     document.addEventListener("DOMContentLoaded", ready);
 } else {
     ready();
@@ -22,6 +22,17 @@ function ready() {
         const button = addToCartButtons[i];
         button.addEventListener("click", addToCartClicked)
     }
+
+    document.getElementsByClassName("btn-purchase")[0].addEventListener("click", purchaseClicked);
+}
+
+function purchaseClicked() {
+    alert("Thank you for your purchase");
+    const cartItems = document.getElementsByClassName("cart-items")[0];
+    while (cartItems.hasChildNodes()) {
+        cartItems.removeChild(cartItems.firstChild);
+    }
+    updateCartTotal();
 }
 
 function removeCartItem(event) {
@@ -46,6 +57,7 @@ function addToCartClicked(event) {
     const imageSrc = shopItem.getElementsByClassName("shop-item-image")[0].src;
     console.log(title, price, imageSrc);
     addItemToCart(title, price, imageSrc);
+    updateCartTotal();
 }
 
 function addItemToCart(title, price, imageSrc) {
@@ -71,6 +83,8 @@ function addItemToCart(title, price, imageSrc) {
         </div>`;
     cartRow.innerHTML = cartRowContents;
     cartItems.append(cartRow);
+    cartRow.getElementsByClassName("btn-danger")[0].addEventListener("click", removeCartItem);
+    cartRow.getElementsByClassName("cart-quantity-input")[0].addEventListener("change", quantityChange);
 }
 
 function updateCartTotal() {
@@ -89,3 +103,4 @@ function updateCartTotal() {
     total = Math.round(total * 100)/100;
     document.getElementsByClassName("cart-total-price")[0].innerText = "$" + total
 }
+
