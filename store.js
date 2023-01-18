@@ -16,12 +16,18 @@ function ready() {
         const input = quantityInputs[i];
         input.addEventListener("change", quantityChange)
     }
+
+    const addToCartButtons = document.getElementsByClassName("shop-item-button");
+    for (let i = 0; i < addToCartButtons.length; i++) {
+        const button = addToCartButtons[i];
+        button.addEventListener("click", addToCartClicked)
+    }
 }
 
 function removeCartItem(event) {
     const buttonClicked = event.target // whatever button we clicked on
-            buttonClicked.parentElement.parentElement.remove();
-            updateCartTotal();
+    buttonClicked.parentElement.parentElement.remove();
+    updateCartTotal();
 }
 
 function quantityChange(event) {
@@ -30,6 +36,15 @@ function quantityChange(event) {
         input.value = 1;
     }
     updateCartTotal();
+}
+
+function addToCartClicked(event) {
+    const button = event.target;
+    const shopItem = button.parentElement.parentElement
+    const title = shopItem.getElementsByClassName("shop-item-title")[0].innerText;
+    const price = shopItem.getElementsByClassName("shop-item-price")[0].innerText;
+    const imageSrc = shopItem.getElementsByClassName("shop-item-image")[0].src;
+    console.log(title, price, imageSrc);
 }
 
 function updateCartTotal() {
