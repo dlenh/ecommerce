@@ -52,6 +52,13 @@ function addItemToCart(title, price, imageSrc) {
     const cartRow = document.createElement("div");
     cartRow.classList.add("cart-row");
     const cartItems = document.getElementsByClassName("cart-items")[0];
+    const cartItemNames = cartItems.getElementsByClassName("cart-item-title");
+    for (let i = 0; i < cartItemNames.length; i++) {
+        if (cartItemNames[i].innerText == title) {
+            alert("This item is already added to the cart");
+            return;
+        }
+    }
     const cartRowContents = `
         <div class="cart-item cart-column">
             <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
@@ -61,7 +68,7 @@ function addItemToCart(title, price, imageSrc) {
         <div class="cart-quantity cart-column">
             <input class="cart-quantity-input" type="number" value="1">
             <button class="btn btn-danger" type="button">REMOVE</button>
-        </div>`
+        </div>`;
     cartRow.innerHTML = cartRowContents;
     cartItems.append(cartRow);
 }
